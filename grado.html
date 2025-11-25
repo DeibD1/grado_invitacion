@@ -42,7 +42,66 @@
         perspective: 1000px;
       }
 
-      /* --- Fondo Animado --- */
+      /* --- PANTALLA DE CARGA (INTRO) --- */
+      .intro-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .intro-text {
+        color: #fff;
+        opacity: 0; /* Empieza invisible */
+      }
+
+      .intro-welcome {
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        letter-spacing: 4px;
+        color: #888;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+      }
+
+      .intro-name {
+        font-family: "Great Vibes", cursive;
+        font-size: 3.5rem;
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .intro-message {
+        font-family: "Lato", sans-serif;
+        font-size: 1rem;
+        color: #ccc;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      /* --- LÍNEA DE CARGA DORADA --- */
+      .loader-line {
+        width: 0%;
+        height: 2px;
+        background: var(--gold-gradient);
+        margin-top: 30px;
+        box-shadow: 0 0 10px var(--gold-color);
+      }
+
+      /* --- ELEMENTOS EXISTENTES --- */
       .ambient-light {
         position: absolute;
         width: 150%;
@@ -57,7 +116,6 @@
         z-index: -2;
         animation: pulseLight 8s infinite alternate ease-in-out;
       }
-
       @keyframes pulseLight {
         0% {
           transform: scale(1);
@@ -84,13 +142,13 @@
         opacity: 0.4;
       }
 
-      /* --- TARJETA --- */
       .card-container {
         position: relative;
         width: 90%;
         max-width: 450px;
         transform-style: preserve-3d;
         z-index: 10;
+        visibility: hidden; /* Se oculta hasta que termine la intro */
       }
 
       .glass-card {
@@ -148,14 +206,12 @@
         color: #ccc;
         margin-bottom: 0.5rem;
       }
-
       .title-container {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 0.5rem;
       }
-
       .main-title {
         font-family: "Great Vibes", cursive;
         font-size: 4rem;
@@ -167,19 +223,17 @@
         line-height: 1.2;
         filter: drop-shadow(0 0 10px rgba(223, 189, 105, 0.3));
       }
-
       .cap-icon-title {
         color: var(--gold-color);
         font-size: 2rem;
         filter: drop-shadow(0 0 5px rgba(223, 189, 105, 0.5));
       }
-
       .class-year {
         font-family: "Great Vibes", cursive;
         font-size: 2rem;
         color: white;
         letter-spacing: 5px;
-        margin-bottom: 2.5rem;
+        margin-bottom: 2rem;
         display: inline-block;
         padding-bottom: 10px;
         position: relative;
@@ -195,15 +249,13 @@
         background: rgba(223, 189, 105, 0.5);
       }
 
-      /* --- GRID DETALLES --- */
       .details-grid {
         display: grid;
         grid-template-columns: 1fr 1px 1fr;
         gap: 15px;
         align-items: center;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
       }
-
       .vertical-line {
         height: 50px;
         background: linear-gradient(
@@ -213,13 +265,11 @@
           transparent
         );
       }
-
       .info-box {
         display: flex;
         flex-direction: column;
         justify-content: center;
       }
-
       .date-number {
         font-family: "Cinzel", serif;
         font-size: 3.5rem;
@@ -228,14 +278,12 @@
         color: #fcf6ba;
         text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
       }
-
       .date-month {
         text-transform: uppercase;
         font-size: 0.9rem;
         letter-spacing: 3px;
         color: #dfbd69;
       }
-
       .info-label {
         font-size: 0.7rem;
         text-transform: uppercase;
@@ -245,7 +293,6 @@
         display: flex;
         align-items: center;
       }
-
       .icon-wrapper {
         display: flex;
         align-items: center;
@@ -266,7 +313,29 @@
         font-weight: 400;
       }
 
-      /* --- BOTÓN VER MAPA --- */
+      .gift-container {
+        margin-bottom: 2rem;
+        padding: 10px;
+        border-top: 1px solid rgba(223, 189, 105, 0.2);
+        border-bottom: 1px solid rgba(223, 189, 105, 0.2);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+      }
+      .gift-icon {
+        color: var(--gold-color);
+        font-size: 1.2rem;
+      }
+      .gift-text {
+        font-family: "Cinzel", serif;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.9rem;
+      }
+
       .map-link {
         display: inline-block;
         margin-top: 5px;
@@ -281,7 +350,6 @@
         text-shadow: 0 0 8px rgba(223, 189, 105, 0.6);
       }
 
-      /* --- BOTÓN ACEPTAR --- */
       .cta-button {
         position: relative;
         padding: 18px 40px;
@@ -316,7 +384,6 @@
         width: 100%;
       }
 
-      /* --- MODAL MAPA --- */
       .map-modal {
         display: none;
         position: fixed;
@@ -398,10 +465,28 @@
         iframe {
           height: 250px;
         }
+        .gift-container {
+          flex-direction: column;
+          gap: 5px;
+        }
+        .intro-name {
+          font-size: 2.5rem;
+        }
       }
     </style>
   </head>
   <body>
+    <div class="intro-overlay" id="introOverlay">
+      <p class="intro-text intro-welcome">Bienvenido</p>
+      <h1 class="intro-text intro-name" id="guestNameDisplay">
+        Invitado Especial
+      </h1>
+      <p class="intro-text intro-message">
+        Has sido seleccionado para acompañarme<br />en este momento especial.
+      </p>
+      <div class="loader-line"></div>
+    </div>
+
     <div class="ambient-light"></div>
     <div class="particles" id="particles"></div>
 
@@ -428,9 +513,7 @@
             <span class="date-number">12</span>
             <span class="date-month">Diciembre</span>
           </div>
-
           <div class="vertical-line"></div>
-
           <div class="info-box" style="text-align: left; padding-left: 10px">
             <div class="icon-wrapper reveal-text">
               <div>
@@ -438,7 +521,7 @@
                   <i class="fas fa-clock icon-detail"></i>
                   Hora
                 </div>
-                <div class="info-value">5:30 PM</div>
+                <div class="info-value">7:00 PM</div>
               </div>
             </div>
             <div class="icon-wrapper reveal-text">
@@ -460,6 +543,13 @@
         </div>
 
         <div class="reveal-text">
+          <div class="gift-container">
+            <i class="fas fa-envelope gift-icon"></i>
+            <span class="gift-text">Lluvia de Sobres</span>
+          </div>
+        </div>
+
+        <div class="reveal-text">
           <p style="font-size: 0.8rem; margin-bottom: 15px; color: #aaa">
             Acepta la invitación aquí
           </p>
@@ -472,7 +562,7 @@
       <div class="map-content">
         <div class="close-map" id="closeMapBtn">×</div>
         <iframe
-          src="https://maps.google.com/maps?q=Conjunto+Residencial+Montebonito+Ibague&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          src="https://maps.google.com/maps?q=4.4481738,-75.1580567+(Montebonito+Conjunto+Residencial)&z=16&output=embed"
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
@@ -484,22 +574,86 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-      const tl = gsap.timeline();
-      tl.from(".glass-card", {
-        duration: 1.5,
-        y: 50,
-        opacity: 0,
-        rotationX: 20,
-        ease: "power3.out",
-      })
+      // 1. OBTENER NOMBRE DEL INVITADO DESDE LA URL
+      // Para usarlo, envía el link así: tudominio.com/index.html?invitado=Juan Perez
+      const params = new URLSearchParams(window.location.search);
+      const guestName = params.get("invitado");
+      const nameElement = document.getElementById("guestNameDisplay");
+
+      if (guestName) {
+        // Limpiamos caracteres extraños para seguridad simple
+        nameElement.textContent = guestName.replace(
+          /[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g,
+          ""
+        );
+      } else {
+        nameElement.textContent = "Apreciado Invitado";
+      }
+
+      // 2. SECUENCIA DE ANIMACIÓN MAESTRA (INTRO + TARJETA)
+      const masterTl = gsap.timeline();
+
+      // --- ANIMACIÓN DE LA INTRO ---
+      masterTl
+        .to(".intro-welcome", { opacity: 1, duration: 1, ease: "power2.out" })
+        .to(
+          ".intro-name",
+          { opacity: 1, duration: 1.2, scale: 1.1, ease: "power2.out" },
+          "-=0.5"
+        )
+        .to(
+          ".intro-message",
+          { opacity: 1, duration: 1, y: 0, ease: "power2.out" },
+          "-=0.8"
+        )
+        .to(".loader-line", {
+          width: "80%",
+          duration: 1.5,
+          ease: "power2.inOut",
+        })
+        // Desvanecer Intro
+        .to(".intro-overlay", {
+          opacity: 0,
+          duration: 1,
+          ease: "power2.inOut",
+          onComplete: () => {
+            document.getElementById("introOverlay").style.display = "none";
+            document.getElementById("card3D").style.visibility = "visible";
+          },
+        })
+
+        // --- ANIMACIÓN DE LA TARJETA (INICIA DESPUÉS DE LA INTRO) ---
+        .from(
+          ".glass-card",
+          {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            rotationX: 20,
+            ease: "power3.out",
+          },
+          "-=0.2"
+        ) // Solapamiento ligero para fluidez
         .from(
           ".corner-decor",
-          { duration: 1, width: 0, height: 0, opacity: 0, ease: "power2.out" },
+          {
+            duration: 1,
+            width: 0,
+            height: 0,
+            opacity: 0,
+            ease: "power2.out",
+          },
           "-=1"
         )
         .from(
           ".reveal-text, .cap-icon-title",
-          { duration: 1, y: 20, opacity: 0, stagger: 0.2, ease: "power2.out" },
+          {
+            duration: 1,
+            y: 20,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power2.out",
+          },
           "-=0.5"
         )
         .from(
@@ -513,6 +667,7 @@
           "-=0.8"
         );
 
+      // 3. EFECTO 3D TILT
       const card = document.getElementById("card3D");
       document.addEventListener("mousemove", (e) => {
         if (
@@ -538,6 +693,7 @@
         });
       });
 
+      // 4. LÓGICA DEL MAPA
       const mapModal = document.getElementById("mapModal");
       const openMapBtn = document.getElementById("openMapBtn");
       const closeMapBtn = document.getElementById("closeMapBtn");
@@ -547,15 +703,14 @@
         mapModal.classList.add("active");
         gsap.to(card, { rotationY: 0, rotationX: 0, duration: 0.5 });
       });
-
       closeMapBtn.addEventListener("click", () => {
         mapModal.classList.remove("active");
       });
-
       mapModal.addEventListener("click", (e) => {
         if (e.target === mapModal) mapModal.classList.remove("active");
       });
 
+      // 5. BOTÓN ACEPTAR
       const btn = document.getElementById("acceptBtn");
       btn.addEventListener("click", () => {
         var end = Date.now() + 1000;
@@ -588,6 +743,7 @@
         });
       });
 
+      // PARTICULAS
       document.addEventListener("mousemove", (e) => {
         const x = (window.innerWidth - e.pageX * 2) / 100;
         const y = (window.innerHeight - e.pageY * 2) / 100;
