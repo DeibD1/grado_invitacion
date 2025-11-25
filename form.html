@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Confirmación de Asistencia</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --bg-deep: #050505;
+        --card-bg: rgba(20, 20, 25, 0.9); /* Más opaco para contraste */
+        --gold-main: #dfbd69;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--bg-deep);
+        font-family: "Lato", sans-serif;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow-x: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+        padding: 20px;
+      }
+
+      /* --- FONDO --- */
+      .ambient-light {
+        position: fixed;
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(
+          circle,
+          rgba(158, 127, 43, 0.15) 0%,
+          rgba(5, 5, 5, 0) 60%
+        );
+        top: -25%;
+        left: -25%;
+        z-index: -2;
+        animation: pulseLight 8s infinite alternate ease-in-out;
+      }
+
+      @keyframes pulseLight {
+        0% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(1.1);
+          opacity: 0.8;
+        }
+      }
+
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-image: radial-gradient(
+          rgba(223, 189, 105, 0.2) 1px,
+          transparent 1px
+        );
+        background-size: 50px 50px;
+        opacity: 0.4;
+      }
+
+      /* --- TARJETA --- */
+      .card-container {
+        width: 100%;
+        max-width: 500px;
+        transform-style: preserve-3d;
+      }
+
+      .glass-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 236, 179, 0.1);
+        border-radius: 20px;
+        /* IMPORTANTE: Aumenté el padding inferior para dar espacio al botón */
+        padding: 3rem 2.5rem 5rem 2.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        position: relative;
+        transform: translateZ(0);
+        /* IMPORTANTE: Permite que el contenido se vea si desborda */
+        overflow: visible;
+      }
+
+      /* --- ESQUINAS --- */
+      .corner-decor {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border: 2px solid var(--gold-main);
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 20;
+      }
+      .tl {
+        top: 15px;
+        left: 15px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .tr {
+        top: 15px;
+        right: 15px;
+        border-left: none;
+        border-bottom: none;
+      }
+      .bl {
+        bottom: 15px;
+        left: 15px;
+        border-right: none;
+        border-top: none;
+      }
+      .br {
+        bottom: 15px;
+        right: 15px;
+        border-left: none;
+        border-top: none;
+      }
+
+      /* --- FORMULARIO --- */
+      .form-title {
+        font-family: "Cinzel", serif;
+        font-size: 2rem;
+        text-align: center;
+        color: #fcf6ba;
+        margin-bottom: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 2.5rem;
+      }
+
+      .input-label {
+        display: block;
+        font-family: "Cinzel", serif;
+        color: var(--gold-main);
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        font-weight: 700;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 0;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-family: "Lato", sans-serif;
+        font-size: 1rem;
+        border-radius: 0;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-bottom: 1px solid var(--gold-main);
+      }
+
+      select.form-control {
+        cursor: pointer;
+        background-color: transparent;
+        color: white;
+      }
+      select.form-control option {
+        background-color: #050505;
+        color: white;
+      }
+
+      /* --- BOTÓN FIXED (ESTILO FORZADO) --- */
+      .cta-button {
+        /* Propiedades base para asegurar visibilidad */
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        margin-top: 30px;
+
+        /* Estilos visuales */
+        background-color: transparent; /* Fondo transparente */
+        color: #dfbd69;
+        border: 1px solid #dfbd69;
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        z-index: 100; /* Z-index alto para estar encima de todo */
+        transition: all 0.3s ease;
+      }
+
+      /* Efecto hover */
+      .cta-button:hover {
+        background-color: #dfbd69;
+        color: #050505;
+        box-shadow: 0 0 20px rgba(223, 189, 105, 0.6);
+      }
+
+      .btn-icon {
+        margin-right: 10px;
+      }
+
+      @media (max-width: 480px) {
+        .glass-card {
+          padding: 2rem 1.5rem 4rem 1.5rem;
+        }
+        .form-title {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ambient-light"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="card-container" id="cardForm">
+      <div class="glass-card">
+        <div class="corner-decor tl"></div>
+        <div class="corner-decor tr"></div>
+        <div class="corner-decor bl"></div>
+        <div class="corner-decor br"></div>
+
+        <h2 class="form-title">Confirmar Asistencia</h2>
+
+        <form id="whatsappForm">
+          <div class="input-group">
+            <label class="input-label">Nombre Completo</label>
+            <input
+              type="text"
+              id="nombre"
+              class="form-control"
+              placeholder="Escribe tu nombre aquí"
+              autocomplete="name"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">¿Nos acompañarás?</label>
+            <select id="asistencia" class="form-control" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="¡Sí! Será un honor asistir 🎓">
+                Sí, será un honor asistir
+              </option>
+              <option value="Lamentablemente no podré asistir">
+                Lamentablemente no podré asistir
+              </option>
+            </select>
+          </div>
+
+          <button type="submit" class="cta-button">
+            <i class="fab fa-whatsapp btn-icon"></i> Enviar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+      // 1. Animación SIMPLE (Solo la tarjeta, el contenido ya está visible)
+      // Esto evita que el JS oculte el botón por error.
+      gsap.from(".glass-card", {
+        duration: 1.5,
+        y: 40,
+        opacity: 0,
+        ease: "power3.out",
+      });
+
+      // 2. Efecto 3D Tilt
+      const card = document.getElementById("cardForm");
+      if (window.innerWidth > 768) {
+        document.addEventListener("mousemove", (e) => {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+          gsap.to(card, {
+            rotationY: xAxis,
+            rotationX: yAxis,
+            duration: 0.5,
+            ease: "power1.out",
+          });
+        });
+      }
+
+      // 3. Lógica de WhatsApp
+      const form = document.getElementById("whatsappForm");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nombre = document.getElementById("nombre").value;
+        const asistencia = document.getElementById("asistencia").value;
+
+        // TU NÚMERO
+        const telefono = "573114474962";
+
+        const mensaje = `Hola, soy *${nombre}*. \nRespecto a tu graduación: \n*${asistencia}*`;
+
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const baseUrl = isMobile
+          ? "https://api.whatsapp.com/send"
+          : "https://web.whatsapp.com/send";
+
+        const url = `${baseUrl}?phone=${telefono}&text=${encodeURIComponent(
+          mensaje
+        )}`;
+
+        window.open(url, "_blank");
+      });
+
+      // Fondo
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth - e.pageX * 2) / 100;
+        const y = (window.innerHeight - e.pageY * 2) / 100;
+        gsap.to(".particles", { x: x, y: y, duration: 2 });
+      });
+    </script>
+  </body>
+</html>
